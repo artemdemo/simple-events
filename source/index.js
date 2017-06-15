@@ -1,34 +1,35 @@
 const cbMap = {};
 
 const eventListener = {
-    on: (type, cb) => {
-        if (!this.cbMap.hasOwnProperty(type)) {
-            this.cbMap[type] = [];
+    on: (route, cb) => {
+        if (!this.cbMap.hasOwnProperty(route)) {
+            this.cbMap[route] = [];
         }
-        this.cbMap[type].push(cb);
+        this.cbMap[route].push(cb);
     },
 
-    off: (type, cb) => {
-        if (!this.cbMap.hasOwnProperty(type)) {
-            throw new Error(`[EventListener: off()] There is no such type: ${type}`);
+    off: (route, cb) => {
+        if (!this.cbMap.hasOwnProperty(route)) {
+            throw new Error(`[EventListener: off()] There is no such route: ${route}`);
         }
-        for (let i = this.cbMap[type].length - 1; i >= 0; i--) {
-            if (this.cbMap[type][i] === cb) {
-                this.cbMap[type] = [
-                    ...this.cbMap[type].slice(0, i),
-                    ...this.cbMap[type].slice(i + 1),
-                ];
+        for (let i = this.cbMap[route].length - 1; i >= 0; i--) {
+            if (this.cbMap[route][i] === cb) {
+                // this.cbMap[route] = [
+                //     ...this.cbMap[route].slice(0, i),
+                //     ...this.cbMap[route].slice(i + 1),
+                // ];
+                this.cbMap[route].splice(i, 1);
                 return true;
             }
         }
         return false;
     },
 
-    send: (type, data) => {
-        if (!this.cbMap.hasOwnProperty(type)) {
-            throw new Error(`[EventListener: send()] There is no such type: ${type}`);
+    send: (route, data) => {
+        if (!this.cbMap.hasOwnProperty(route)) {
+            throw new Error(`[EventListener: send()] There is no such route: ${route}`);
         }
-        this.cbMap[type].forEach(cb => cb(data));
+        this.cbMap[route].forEach(cb => cb(data));
     },
 }
 
