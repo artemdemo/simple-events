@@ -4,7 +4,7 @@
   "description": "Simple events listener",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "babel-node jasmine-run.js"
   },
   "repository": {
     "type": "git",
