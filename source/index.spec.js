@@ -16,6 +16,17 @@ describe('Simple events', () => {
         simpleEvents.send('subscribe');
     });
 
+    it('should send data', (done) => {
+        const someData = {
+            foo: 1,
+        };
+        simpleEvents.on('send-data', (data) => {
+            done();
+            expect(data).toEqual(someData);
+        });
+        simpleEvents.send('send-data', someData);
+    });
+
     it('should call all callbacks in route', (done) => {
         let counter = 0;
         simpleEvents.on('call-all', () => {
