@@ -1,6 +1,6 @@
 const cbMap = {};
 
-const eventListener = {
+const simpleEvents = {
     on: (route, cb) => {
         if (!cbMap.hasOwnProperty(route)) {
             cbMap[route] = [];
@@ -10,10 +10,10 @@ const eventListener = {
 
     off: (route, cb) => {
         if (!cbMap.hasOwnProperty(route)) {
-            throw new Error(`[EventListener: off()] There is no such route: ${route}`);
+            throw new Error(`[simpleEvents: off()] There is no such route: ${route}`);
         }
         if (!cb) {
-            cbMap[route] = undefined;
+            cbMap[route] = [];
             return true;
         }
         for (let i = cbMap[route].length - 1; i >= 0; i--) {
@@ -27,10 +27,10 @@ const eventListener = {
 
     send: (route, data) => {
         if (!cbMap[route]) {
-            throw new Error(`[EventListener: send()] There is no such route: ${route}`);
+            throw new Error(`[simpleEvents: send()] There is no such route: ${route}`);
         }
         cbMap[route].forEach(cb => cb(data));
     },
 }
 
-export default eventListener;
+export default simpleEvents;

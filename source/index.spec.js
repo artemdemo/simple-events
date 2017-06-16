@@ -55,7 +55,7 @@ describe('Simple events', () => {
         simpleEvents.send('unsubscribe');
     });
 
-    it('should remove whole route', (done) => {
+    it('should remove whole route', () => {
         simpleEvents.on('remove-route', () => {
             throw new Error('This callback shouldn\'t be called');
         });
@@ -63,10 +63,6 @@ describe('Simple events', () => {
             throw new Error('This callback shouldn\'t be called as well');
         });
         simpleEvents.off('remove-route');
-        try {
-            simpleEvents.send('remove-route');
-        } catch (e) {
-            done();
-        }
+        simpleEvents.send('remove-route');
     });
 });
